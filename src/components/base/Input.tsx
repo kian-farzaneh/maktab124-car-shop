@@ -5,22 +5,30 @@ interface Iprops {
   placeholder: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
 }
 
-export default function Input({ label, placeholder, value, onChange }: Iprops) {
+export default function Input({
+  label,
+  placeholder,
+  value,
+  onChange,
+  error,
+}: Iprops) {
   return (
-    <>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="username">{label}</label>
-        <input
-          className="bg-white w-80 p-3 rounded-xl"
-          type="text"
-          name="username"
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-        />
-      </div>
-    </>
+    <div className="flex flex-col gap-1 w-80">
+      <label htmlFor="username">{label}</label>
+      <input
+        className={`bg-white p-3 rounded-xl border ${
+          error ? "border-red-500" : "border-transparent"
+        }`}
+        type="text"
+        name="username"
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
+      {error && <p className="text-red-600 text-sm mt-1">{error}</p>}
+    </div>
   );
 }
