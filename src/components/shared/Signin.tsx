@@ -29,7 +29,7 @@ export default function Signin({ validationType }: SigninProps) {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
-    setPasswordError(validatePassword(value));
+    setPasswordError(validatePassword(value, validationType));
   };
 
   return (

@@ -1,10 +1,12 @@
 {
-    "username" : "نام کاربری",
-    "enterYourUsername" : "نام کاربری خود را وارد نمایید",
-    "password" : "گذرواژه",
-    "enterYourPassword" : "گذرواژه خود را وارد نمایید",
-    "signin" : "ورود به حساب",
-    "adminUsernameError" : "نام کاربری فقط باید شامل حروف انگلیسی باشد",
-    "userUsernameError" : "لطفاً یک ایمیل معتبر وارد کنید",
-    "passwordError" : "رمز عبور باید حداقل ۸ کاراکتر انگلیسی و شامل حروف و عدد باشد"
-}
+    "username": "نام کاربری",
+    "enterYourUsername": "نام کاربری خود را وارد کنید",
+    "password": "رمز عبور",
+    "enterYourPassword": "رمز عبور خود را وارد کنید",
+    "signin": "ورود",
+    "adminUsernameError": "نام کاربری ادمین فقط باید شامل حروف انگلیسی باشد.",
+    "userUsernameError": "ایمیل وارد شده معتبر نیست.",
+    "adminPasswordError": "رمز عبور ادمین فقط باید شامل اعداد انگلیسی باشد.",
+    "userPasswordError": "رمز عبور باید حداقل ۸ کاراکتر و شامل حروف و اعداد باشد."
+  }
+  
