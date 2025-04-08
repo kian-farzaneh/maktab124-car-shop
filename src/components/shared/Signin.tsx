@@ -1,24 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
-import persign from "@/localization/persian/signin-signup.json";
-import Input from "../base/Input";
-import Button from "../base/Button";
+import React from "react";
 import {
   validateUsername,
   validatePassword,
 } from "@/utils/validations/authValidation";
+import Input from "../base/Input";
+import Button from "../base/Button";
+import persign from "@/localization/persian/signin-signup.json";
 
 interface SigninProps {
   validationType: "admin" | "user";
 }
 
 export default function Signin({ validationType }: SigninProps) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
-  const [usernameError, setUsernameError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [usernameError, setUsernameError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
