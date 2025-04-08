@@ -1,0 +1,134 @@
+{
+    "users": [
+      {
+        "id": 1,
+        "name": "Ali Rezaei",
+        "email": "ali@example.com",
+        "password": "123456"
+      },
+      {
+        "id": 2,
+        "name": "Sara Ahmadi",
+        "email": "sara@example.com",
+        "password": "abcdef"
+      },
+      {
+        "id": 3,
+        "name": "Mohammad Hashemi",
+        "email": "mohammad@example.com",
+        "password": "654321"
+      }
+    ],
+    "admins": [
+      {
+        "id": 1,
+        "username": "admin",
+        "password": "admin123"
+      }
+    ],
+    "cars": [
+      {
+        "id": 1,
+        "brand": "BMW",
+        "model": "X5",
+        "price": 1200000,
+        "color": "black",
+        "image": "/images/bmw-x5.jpg",
+        "stock": 5
+      },
+      {
+        "id": 2,
+        "brand": "Toyota",
+        "model": "Corolla",
+        "price": 450000,
+        "color": "white",
+        "image": "/images/toyota-corolla.jpg",
+        "stock": 10
+      },
+      {
+        "id": 3,
+        "brand": "Mercedes",
+        "model": "C-Class",
+        "price": 980000,
+        "color": "silver",
+        "image": "/images/mercedes-c.jpg",
+        "stock": 7
+      }
+    ],
+    "orders": [
+      {
+        "id": 1,
+        "userId": 1,
+        "items": [
+          {
+            "carId": 2,
+            "quantity": 1
+          }
+        ],
+        "total": 450000,
+        "status": "processing"
+      },
+      {
+        "id": 2,
+        "userId": 2,
+        "items": [
+          {
+            "carId": 1,
+            "quantity": 2
+          }
+        ],
+        "total": 2400000,
+        "status": "shipped"
+      },
+      {
+        "id": 3,
+        "userId": 3,
+        "items": [
+          {
+            "carId": 3,
+            "quantity": 1
+          }
+        ],
+        "total": 980000,
+        "status": "delivered"
+      }
+    ],
+    "cart": [
+      {
+        "id": 1,
+        "userId": 1,
+        "carId": 3,
+        "quantity": 2
+      },
+      {
+        "id": 2,
+        "userId": 2,
+        "carId": 2,
+        "quantity": 1
+      },
+      {
+        "id": 3,
+        "userId": 3,
+        "carId": 1,
+        "quantity": 1
+      }
+    ],
+    "wishlist": [
+      {
+        "id": 1,
+        "userId": 1,
+        "carId": 1
+      },
+      {
+        "id": 2,
+        "userId": 2,
+        "carId": 3
+      },
+      {
+        "id": 3,
+        "userId": 3,
+        "carId": 2
+      }
+    ]
+  }
+  
