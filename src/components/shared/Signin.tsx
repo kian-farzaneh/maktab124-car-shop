@@ -8,6 +8,13 @@ import {
 import Input from "../base/Input";
 import Button from "../base/Button";
 import persign from "@/localization/persian/signin-signup.json";
+import axios from "axios";
+// Redux
+import { useDispatch } from "react-redux";
+import { setAccessToken } from "@/redux/slices/dashboard/adminAuthSlice";
+
+// Router (App Router)
+import { useRouter } from "next/navigation";
 
 interface SigninProps {
   validationType: "admin" | "user";
@@ -20,6 +27,9 @@ export default function Signin({ validationType }: SigninProps) {
   const [usernameError, setUsernameError] = React.useState("");
   const [passwordError, setPasswordError] = React.useState("");
 
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setUsername(value);
@@ -30,6 +40,37 @@ export default function Signin({ validationType }: SigninProps) {
     const value = e.target.value;
     setPassword(value);
     setPasswordError(validatePassword(value, validationType));
+  };
+
+  const handleSubmit = async () => {
+    if (usernameError || passwordError || !username || !password) return;
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`,
+        {
+          email: username,
+          password,
+        },
+        {
+          headers: {
+            api_key: `${process.env.NEXT_PUBLIC_API_KEY}`,
+          },
+        }
+      );
+
+      const accessToken = response.data.accessToken;
+
+      if (validationType === "admin") {
+        dispatch(setAccessToken(accessToken));
+        router.push("/admin/dashboard");
+      } else {
+        localStorage.setItem("userAccessToken", accessToken);
+        router.push("/user/profile");
+      }
+    } catch (err) {
+      console.error("Login failed", err);
+    }
   };
 
   return (
@@ -49,8 +90,11 @@ export default function Signin({ validationType }: SigninProps) {
           value={password}
           onChange={handlePasswordChange}
           error={passwordError}
+          type={"password"}
         />
-        <Button content={persign.signin} className="mt-3" />
+        <div onClick={handleSubmit}>
+          <Button content={persign.signin} className="mt-3" />
+        </div>
       </div>
     </div>
   );

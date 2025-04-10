@@ -6,6 +6,7 @@ interface Iprops {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  type?: "text" | "password" | "email" | "number";
 }
 
 export default function Input({
@@ -14,6 +15,7 @@ export default function Input({
   value,
   onChange,
   error,
+  type = "text",
 }: Iprops) {
   return (
     <div className="flex flex-col gap-1 w-80">
@@ -22,7 +24,7 @@ export default function Input({
         className={`bg-white p-3 rounded-xl border ${
           error ? "border-red-500" : "border-transparent"
         }`}
-        type="text"
+        type={type}
         name="username"
         placeholder={placeholder}
         value={value}
