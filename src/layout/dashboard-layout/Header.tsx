@@ -5,13 +5,16 @@ import persian from "@/localization/persian/dashboard/main-page.json";
 import { usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { removeAccessToken } from "@/redux/slices/dashboard/adminAuthSlice";
+import { useRouter } from "next/navigation";
 
 interface IProps {}
 
 export default function Header({}: IProps) {
   const dispatch = useDispatch();
+  const router = useRouter()
   const handleLogout = () => {
     dispatch(removeAccessToken());
+    router.replace("/admin-signin"); 
   };
   const pathname = usePathname();
   const getTitle = () => {
