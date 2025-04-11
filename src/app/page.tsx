@@ -3,7 +3,7 @@ import { CiSearch } from "react-icons/ci";
 import { FaCarAlt } from "react-icons/fa";
 import { FiHeart, FiHome } from "react-icons/fi";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import perCommen from "@/localization/persian/common.json";
+import perCommen from "@/localization/persian/shared/common.json";
 
 export default function Home() {
   return (

@@ -3,7 +3,7 @@ export const englishOnlyRegex = /^[a-zA-Z]+$/;
 export const onlyNumbersRegex = /^[0-9]+$/;
 export const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
-import persign from "@/localization/persian/signin-signup.json";
+import persign from "@/localization/persian/shared/signin-signup.json";
 
 
 export const validateUsername = (

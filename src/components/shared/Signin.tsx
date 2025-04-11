@@ -7,7 +7,7 @@ import {
 } from "@/utils/validations/authValidation";
 import Input from "../base/Input";
 import Button from "../base/Button";
-import persign from "@/localization/persian/signin-signup.json";
+import persign from "@/localization/persian/shared/signin-signup.json";
 import axios from "axios";
 // Redux
 import { useDispatch } from "react-redux";
@@ -63,7 +63,7 @@ export default function Signin({ validationType }: SigninProps) {
 
       if (validationType === "admin") {
         dispatch(setAccessToken(accessToken));
-        router.push("/admin/dashboard");
+        router.push("/dashboard");
       } else {
         localStorage.setItem("userAccessToken", accessToken);
         router.push("/user/profile");
