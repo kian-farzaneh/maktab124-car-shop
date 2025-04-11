@@ -74,9 +74,9 @@ export default function Signin({ validationType }: SigninProps) {
   };
 
   return (
-    <div className="flex flex-col justify-center gap-20 pt-9 shadow-black shadow-2xl rounded-b-2xl">
+    <div className="w-[500px] mx-auto mt-5 flex flex-col bg-white justify-center gap-20 pt-9 shadow-black shadow-2xl rounded-2xl">
       <img src="/logo/LOGO.png" alt="logo" />
-      <div className="bg-[#F1B77D] flex flex-col items-center gap-4 text-[#5c5c5c] py-5 rounded-2xl">
+      <div className="bg-[#f3a557] flex flex-col items-center gap-4 text-[#5c5c5c] py-5 rounded-2xl">
         <Input
           label={persign.username}
           placeholder={persign.enterYourUsername}
