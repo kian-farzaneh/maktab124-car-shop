@@ -1,9 +1,22 @@
-import React from "react";
+'use client'
+
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Signin from "@/components/shared/Signin";
+
 export default function AdminSigninPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("adminAccessToken");
+    if (token) {
+      router.replace("/dashboard");
+    }
+  }, []);
+
   return (
     <div className="w-full h-screen bg-[#EC8C2F] p-2">
-        <Signin validationType="admin" />
+      <Signin validationType="admin" />
     </div>
   );
 }
