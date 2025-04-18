@@ -4,7 +4,10 @@ import React, { useEffect, useState } from "react";
 import persian2 from "@/localization/persian/dashboard/product-page.json";
 import { RiDeleteBin6Fill, RiEdit2Fill } from "react-icons/ri";
 import { AddModal } from "@/components/dashboard/modals/AddProduct";
-import { DeleteProduct } from "@/components/dashboard/modals/DeleteProduct";
+import {
+  DeleteProduct,
+  deleteProductInApie,
+} from "@/components/dashboard/modals/DeleteProduct";
 import { EditModal } from "@/components/dashboard/modals/EditProduct";
 import getProducts from "@/api/getProducts";
 import { CiFilter } from "react-icons/ci";
@@ -18,6 +21,9 @@ export default function Product() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [allProducts, setAllProducts] = useState<any[]>([]);
   const [filterMenuOpen, setFilterMenuOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(
+    null
+  );
 
   const fetchData = async () => {
     const result = await getProducts();
@@ -39,8 +45,18 @@ export default function Product() {
     startIndex + itemsPerPage
   );
 
-  const handleDelete = () => {
-    setIsDeleteModalOpen(false);
+  const handleDelete = async () => {
+    if (!selectedProductId) return;
+
+    try {
+      await deleteProductInApie(selectedProductId);
+      fetchData();
+    } catch (error) {
+      console.error("خطا در حذف محصول:", error);
+    } finally {
+      setIsDeleteModalOpen(false);
+      setSelectedProductId(null);
+    }
   };
 
   const handleCancelDelete = () => {
@@ -129,7 +145,10 @@ export default function Product() {
                     className="cursor-pointer"
                     size={23}
                     color="red"
-                    onClick={() => setIsDeleteModalOpen(true)}
+                    onClick={() => {
+                      setSelectedProductId(product.id);
+                      setIsDeleteModalOpen(true);
+                    }}
                   />
                   <RiEdit2Fill
                     className="cursor-pointer text-blue-600"
