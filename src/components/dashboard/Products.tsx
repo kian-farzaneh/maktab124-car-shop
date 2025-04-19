@@ -12,6 +12,8 @@ import { EditModal } from "@/components/dashboard/modals/EditProduct";
 import getProducts from "@/api/getProducts";
 import { CiFilter } from "react-icons/ci";
 import { FilterMenu } from "@/components/dashboard/modals/FilterProducts";
+import { setSelectedProductForEdit } from "@/redux/slices/dashboard/selectedProductForEdit";
+import { useDispatch } from "react-redux";
 
 export default function Product() {
   const itemsPerPage = 5;
@@ -24,6 +26,8 @@ export default function Product() {
   const [selectedProductId, setSelectedProductId] = useState<string | null>(
     null
   );
+
+  const dispatch = useDispatch();
 
   const fetchData = async () => {
     const result = await getProducts();
@@ -153,7 +157,10 @@ export default function Product() {
                   <RiEdit2Fill
                     className="cursor-pointer text-blue-600"
                     size={23}
-                    onClick={() => setIsEditModalOpen(true)}
+                    onClick={() => {
+                      dispatch(setSelectedProductForEdit(product));
+                      setIsEditModalOpen(true);
+                    }}
                   />
                 </td>
               </tr>

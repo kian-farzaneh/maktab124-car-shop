@@ -1,9 +1,11 @@
 import adminReducer from "@/redux/slices/dashboard/adminAuthSlice";
 import { configureStore } from "@reduxjs/toolkit";
+import productSelectedForEditReducer from "@/redux/slices/dashboard/selectedProductForEdit";
 
 const store = configureStore({
   reducer: {
     admin: adminReducer,
+    edit: productSelectedForEditReducer,
   },
 });
 
