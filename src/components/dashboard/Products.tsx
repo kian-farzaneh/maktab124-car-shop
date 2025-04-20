@@ -115,7 +115,13 @@ export default function Product() {
         onClose={handleCancelDelete}
         onConfirm={handleDelete}
       />
-      <EditModal isOpen={isEditModalOpen} onClose={handleCancelEdit} />
+      <EditModal
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          handleCancelEdit();
+          fetchData();
+        }}
+      />
 
       <div className="w-full max-h-[600px] overflow-y-auto flex flex-col items-center gap-4">
         <table className="w-[1000px] table-fixed bg-white rounded-lg shadow-lg">

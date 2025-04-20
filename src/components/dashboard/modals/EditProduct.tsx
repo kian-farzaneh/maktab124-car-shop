@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { updateProduct } from "@/api/editProduct";
 
 interface IProps {
   isOpen: boolean;
@@ -78,10 +79,17 @@ export const EditModal: React.FC<IProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Edit Submitted:", formData);
-    onClose();
+    try{
+      if(!product.id) return;
+      await updateProduct(product.id,formData);
+      console.log("Edit Submitted:", formData);
+      onClose();
+    } catch(err){
+      console.error(err)
+    }
+   
   };
 
   if (!isOpen) return null;
