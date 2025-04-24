@@ -1,18 +1,42 @@
-import { convertToPersianNumbers } from "@/utils/convertToPersianNumbers/convertToPersianNumbers";
 import React from "react";
+import { useRouter } from "next/navigation";
+import { convertToPersianNumbers } from "@/utils/convertToPersianNumbers/convertToPersianNumbers";
 import { BsFillFuelPumpDieselFill } from "react-icons/bs";
 import { MdOutlineAirlineSeatReclineNormal } from "react-icons/md";
 import { TbManualGearboxFilled } from "react-icons/tb";
 
-export default function ProductCard(prop: { price: any; model: any; brand: any; gearbox: any; fuelType: any; seats: any; image: any; name:any }) {
+export default function ProductCard(prop: {
+  id: string;
+  price: number;
+  model: string;
+  brand: string;
+  gearbox: string;
+  fuelType: string;
+  seats: number;
+  image: string;
+  name: string;
+}) {
+  const { id, price, model, brand, gearbox, fuelType, seats, image, name } =
+    prop;
 
-    const {price,model,brand,gearbox,fuelType,seats,image,name} = prop
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/single-product/${id}`);
+  };
 
   return (
-    <div className="w-[400px] border border-[#ff8307] rounded-2xl h-[280px]">
+    <div
+      onClick={handleClick}
+      className="w-[400px] border border-[#ff8307] rounded-2xl h-[280px] cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl hover:bg-[#ff7f00]"
+    >
       <div className="px-5 pt-2.5">
         <div>
-          <img src={image} alt={`${brand} ${model}`} className="w-96 h-[200px]"/>
+          <img
+            src={image}
+            alt={`${brand} ${model}`}
+            className="w-96 h-[200px]"
+          />
         </div>
 
         <div className="flex items-center justify-between py-2">

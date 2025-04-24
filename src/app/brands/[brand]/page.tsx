@@ -82,6 +82,7 @@ export default function BrandPage({ params }: Props) {
         {product?.map((item) => (
           <div key={item.id}>
             <ProductCard
+              id={item.id}
               price={Number(item.discountedPrice)}
               model={item.model}
               brand={item.brand}
