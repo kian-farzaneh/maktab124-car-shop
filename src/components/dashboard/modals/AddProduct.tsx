@@ -90,7 +90,11 @@ export const AddModal: React.FC<IProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await addProduct(formData);
+      const dataToSend = {
+        ...formData,
+        colors: formData.colors.join(", "),
+      };
+      const res = await addProduct(dataToSend);
       console.log("محصول با موفقیت ثبت شد:", res);
       refreshProducts();
       onClose();
