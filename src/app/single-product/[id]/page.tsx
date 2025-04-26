@@ -1,9 +1,14 @@
 "use client";
+import SingleProductMainComponent from "@/components/application/single-product/SingleProductMainComponent";
 import { useParams } from "next/navigation";
 
 export default function CarPage() {
   const params = useParams();
   const id = params.id;
 
-  return <h1>ماشین شماره {id}</h1>;
+  return (
+    <>
+      <SingleProductMainComponent id={Number(id)} />
+    </>
+  );
 }
