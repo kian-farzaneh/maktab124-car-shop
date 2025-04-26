@@ -5,6 +5,8 @@ interface FilterParams {
   filterValue?: string;
   filterMin?: number | string;
   filterMax?: number | string;
+  searchKey?: string;
+  searchValue?: string;
 }
 
 export default async function getProducts(filters: FilterParams = {}) {
@@ -22,6 +24,11 @@ export default async function getProducts(filters: FilterParams = {}) {
 
     if (filters.filterMax) {
       queryParams.append("filterMax", filters.filterMax.toString());
+    }
+
+    if (filters.searchKey && filters.searchValue) {
+      queryParams.append("searchKey", filters.searchKey);
+      queryParams.append("searchValue", filters.searchValue);
     }
 
     const response = await axios.get(
