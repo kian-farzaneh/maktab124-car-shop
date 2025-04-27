@@ -35,7 +35,7 @@ export default function ProductCard(prop: {
           <img
             src={image}
             alt={`${brand} ${model}`}
-            className="w-96 h-[200px]"
+            className="w-96 h-[200px] rounded-lg"
           />
         </div>
 

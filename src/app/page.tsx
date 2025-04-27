@@ -1,21 +1,24 @@
 "use client";
 
-import { CgProfile } from "react-icons/cg";
 import { CiSearch } from "react-icons/ci";
-import { FaCarAlt } from "react-icons/fa";
 import { FiHeart, FiHome } from "react-icons/fi";
-import { IoIosNotificationsOutline } from "react-icons/io";
 
 import { useEffect, useState } from "react";
 
 import getProducts from "@/api/getProducts";
 import perCommen from "@/localization/persian/shared/common.json";
 import ProductCard from "@/components/shared/ProductCard";
+import Logo from "@/components/base/Logo";
+import { IoCartOutline } from "react-icons/io5";
+import { GoPerson } from "react-icons/go";
+import { BsPersonBoundingBox } from "react-icons/bs";
+import AccountModal from "@/components/application/modals/AccountModal";
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
   const [searchText, setSearchText] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
 
   const fetchProducts = (searchValue?: string) => {
     setIsLoading(true);
@@ -41,19 +44,17 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-screen">
+      <AccountModal isOpen={isAccountModalOpen} onClose={() => setIsAccountModalOpen(false)} />
       {" "}
-      <header className="bg-[#ec8c2f] py-3 px-1">
+      <header className="bg-[url('/header/header.png')] py-3 px-1">
         <div dir="ltr" className="flex items-center justify-between px-3">
-          <div className="logo flex items-center gap-1">
-            <FaCarAlt size={40} />
-            <div className="leading-3.5">
-              <p className="text-[20px] font-bold">kian motors</p>{" "}
-              <p className="text-[10px]">you trusted vehicle kian motors</p>
-            </div>
-          </div>
+          <Logo />
 
-          <div className="account-management mr-2 bg-[#f1b77d] text-white p-1 rounded-lg">
-            <IoIosNotificationsOutline size={35} />
+          <div
+            onClick={() => setIsAccountModalOpen((prev) => !prev)}
+            className="account-management mr-2 bg-[#f1b77d] text-white p-1 rounded-lg transition-all duration-500 ease-in-out transform hover:scale-110 hover:bg-[#ec8c2f] hover:shadow-2xl cursor-pointer"
+          >
+            <GoPerson size={35} />
           </div>
         </div>
 
@@ -112,8 +113,8 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col justify-center items-center gap-1 hover:text-[#ec8c2f] transition-colors duration-200 cursor-pointer">
-          <CiSearch className="w-[30px] h-[30px]" />
-          <p className="text-sm">{perCommen.Search}</p>
+          <IoCartOutline className="w-[30px] h-[30px]" />
+          <p className="text-sm">{perCommen.cart}</p>
         </div>
 
         <div className="flex flex-col justify-center items-center gap-1 hover:text-[#ec8c2f] transition-colors duration-200 cursor-pointer">
@@ -122,7 +123,7 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col justify-center items-center gap-1 hover:text-[#ec8c2f] transition-colors duration-200 cursor-pointer">
-          <CgProfile className="w-[30px] h-[30px]" />
+          <BsPersonBoundingBox className="w-[30px] h-[30px]" />
           <p className="text-sm">{perCommen.Profile}</p>
         </div>
       </footer>
