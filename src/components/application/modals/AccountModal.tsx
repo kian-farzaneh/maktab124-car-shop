@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 interface AccountModalProps {
   isOpen: boolean;
@@ -10,6 +11,8 @@ interface AccountModalProps {
 
 export default function AccountModal({ isOpen, onClose }: AccountModalProps) {
   if (!isOpen) return null;
+
+  const router = useRouter();
 
   return (
     <motion.div
@@ -34,7 +37,7 @@ export default function AccountModal({ isOpen, onClose }: AccountModalProps) {
         <button className="bg-[#ec8c2f] text-white py-2 rounded-xl hover:bg-[#d47a23] transition">
           ورود کاربر
         </button>
-        <button className="border border-[#ec8c2f] text-[#ec8c2f] py-2 rounded-xl hover:bg-[#ec8c2f] hover:text-white transition">
+        <button onClick={() => router.push("/admin-signin")} className="border border-[#ec8c2f] text-[#ec8c2f] py-2 rounded-xl hover:bg-[#ec8c2f] hover:text-white transition">
           ورود ادمین
         </button>
       </div>
