@@ -24,12 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" dir="rtl" className="h-full overflow-hidden">
+    <html lang="en" dir="rtl" className="h-full ">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full overflow-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
       >
         <ReduxProvider>
-          <div className="h-full overflow-hidden">{children}</div>
+          <div className="h-full">{children}</div>
         </ReduxProvider>
       </body>
     </html>
