@@ -34,7 +34,7 @@ export default function AccountModal({ isOpen, onClose }: AccountModalProps) {
       </h2>
 
       <div className="flex flex-col gap-3">
-        <button className="bg-[#ec8c2f] text-white py-2 rounded-xl hover:bg-[#d47a23] transition">
+        <button onClick={() => router.push("/user-signin")}  className="border border-[#ec8c2f] text-[#ec8c2f] py-2 rounded-xl hover:bg-[#ec8c2f] hover:text-white transition">
           ورود کاربر
         </button>
         <button onClick={() => router.push("/admin-signin")} className="border border-[#ec8c2f] text-[#ec8c2f] py-2 rounded-xl hover:bg-[#ec8c2f] hover:text-white transition">

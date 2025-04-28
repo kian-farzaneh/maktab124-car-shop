@@ -66,7 +66,7 @@ export default function Signin({ validationType }: SigninProps) {
         router.push("/dashboard");
       } else {
         localStorage.setItem("userAccessToken", accessToken);
-        router.push("/user/profile");
+        router.push("/");
       }
     } catch (err) {
       console.error("Login failed", err);
