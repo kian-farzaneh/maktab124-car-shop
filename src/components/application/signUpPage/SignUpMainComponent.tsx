@@ -1,7 +1,8 @@
 "use client";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Button from "@/components/base/Button";
 import Input from "@/components/base/Input";
-import React, { useState } from "react";
 import {
   validateUsername,
   validatePassword,
@@ -10,8 +11,11 @@ import {
   validatePhoneNumber,
 } from "@/utils/validations/authValidation";
 import { toast } from "react-toastify";
+import { signUpUser } from "@/api/signupUser";
 
 export default function SignUpMainComponent() {
+  const router = useRouter();
+
   // name
   const [name, setName] = useState<any>("");
   const [nameError, setNameError] = useState<any>("");
@@ -73,16 +77,36 @@ export default function SignUpMainComponent() {
   };
   // repeat password
 
-  // handle submit
-  const handleSubmit = (e: React.FormEvent) => {
+  // address
+  const [address, setAddress] = useState("");
+  const [addressError, setAddressError] = useState("");
+  const handleAddressChange = (e: any) => {
+    const value = e.target.value;
+    setAddress(value);
+    if (!value.trim()) {
+      setAddressError("آدرس نمی‌تواند خالی باشد");
+    } else {
+      setAddressError("");
+    }
+  };
+  // address
+
+  // handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!address.trim()) {
+      setAddressError("آدرس نمی‌تواند خالی باشد");
+    }
 
     if (
       nameError ||
       lastNameError ||
       phoneNumberError ||
       emailError ||
-      passwordError
+      passwordError ||
+      !address.trim() ||
+      repeatPasswordasswordError
     ) {
       toast.error("لطفا همه فیلدها را به درستی پر کنید");
       return;
@@ -94,10 +118,24 @@ export default function SignUpMainComponent() {
       return;
     }
 
-    toast.success("ثبت‌نام با موفقیت انجام شد!");
-    console.log("Registration successful!");
+    try {
+      const token = await signUpUser({
+        name,
+        lastName,
+        phoneNumber: Number(phoneNumber),
+        email,
+        password,
+        address,
+      });
+      toast.success("ثبت‌نام با موفقیت انجام شد!");
+      console.log("Access token:", token);
+      router.push("/user-signin");
+    } catch (error) {
+      toast.error("ثبت‌نام با خطا مواجه شد");
+      console.error(error);
+    }
   };
-  // handle submit
+  // handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit// handle submit
 
   return (
     <div className="w-[500px] min-h-[700px] mx-auto my-5 flex flex-col bg-white justify-center gap-10 pt-9 shadow-black shadow-2xl rounded-2xl">
@@ -145,11 +183,21 @@ export default function SignUpMainComponent() {
           onChange={handleRepeatPasswordlChange}
           error={repeatPasswordasswordError}
         />
-
+        <label className="flex flex-col w-full px-24">
+          <span>آدرس</span>
+          <textarea
+            className="bg-white rounded-xl h-24 p-4"
+            name="address"
+            value={address}
+            onChange={handleAddressChange}
+          ></textarea>
+          {addressError && (
+            <span className="text-red-600 text-sm mt-1">{addressError}</span>
+          )}
+        </label>
         <div onClick={handleSubmit}>
           <Button content="ثبت نام" className="mt-3" />
         </div>
-        
       </div>
     </div>
   );
