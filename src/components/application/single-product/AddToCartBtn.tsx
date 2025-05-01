@@ -3,6 +3,8 @@ import persian from "@/localization/persian/application/single-product.json";
 import Button from "@/components/base/Button";
 import Logo from "@/components/base/Logo";
 import { convertToPersianNumbers } from "@/utils/convertToPersianNumbers/convertToPersianNumbers";
+import { toast } from "react-toastify";
+
 
 interface IProduct {
   id: string;
@@ -36,6 +38,14 @@ interface IProps {
 }
 
 export default function AddToCartBtn({ product, onAddToCart }: IProps) {
+  const handleClick = () => {
+    const token = localStorage.getItem("userAccessToken");
+    if (!token) {
+      toast.error("برای افزودن به سبد خرید باید وارد حساب کاربری شوید.");
+      return;
+    }
+    onAddToCart();
+  };
   return (
     <div className="bg-white border border-[#ec8c2f] rounded-3xl h-44 shadow-lg p-5 w-[533px] ml-3 space-y-6 transition-all duration-300 hover:shadow-2xl">
       <div className="flex items-center justify-between flex-wrap gap-4">
@@ -43,14 +53,16 @@ export default function AddToCartBtn({ product, onAddToCart }: IProps) {
         <div className="flex flex-col text-right">
           <p className="text-xl font-bold text-green-700">
             {convertToPersianNumbers(product.discountedPrice)}{" "}
-            <span className="text-sm font-normal text-gray-700">{persian.dollar}</span>
+            <span className="text-sm font-normal text-gray-700">
+              {persian.dollar}
+            </span>
           </p>
           <p className="text-sm text-gray-600">: مبلغ قابل پرداخت</p>
         </div>
       </div>
       <Button
         content={persian.addToCart}
-        onClick={onAddToCart}
+        onClick={handleClick}
         className="w-full bg-[#ec8c2f] hover:bg-[#d17b25] text-white font-bold py-2 px-4 rounded-xl text-lg transition-all duration-200"
       />
     </div>
