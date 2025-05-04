@@ -13,12 +13,16 @@ import { IoCartOutline } from "react-icons/io5";
 import { GoPerson } from "react-icons/go";
 import { BsPersonBoundingBox } from "react-icons/bs";
 import AccountModal from "@/components/application/modals/AccountModal";
+import { checkUserAuthenticated } from "@/utils/authUser/authUser";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
   const [searchText, setSearchText] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
+
+  const router = useRouter();
 
   const fetchProducts = (searchValue?: string) => {
     setIsLoading(true);
@@ -42,10 +46,18 @@ export default function Home() {
     fetchProducts(searchText);
   };
 
+  const handleCartClick = () => {
+    const isAuthenticated = checkUserAuthenticated();
+    if (!isAuthenticated) return;
+    router.push("/cart");
+  };
+
   return (
     <div className="flex flex-col h-screen">
-      <AccountModal isOpen={isAccountModalOpen} onClose={() => setIsAccountModalOpen(false)} />
-      {" "}
+      <AccountModal
+        isOpen={isAccountModalOpen}
+        onClose={() => setIsAccountModalOpen(false)}
+      />{" "}
       <header className="bg-[url('/header/header.png')] py-3 px-1">
         <div dir="ltr" className="flex items-center justify-between px-3">
           <Logo />
@@ -112,7 +124,10 @@ export default function Home() {
           <p className="text-sm">{perCommen.Home}</p>
         </div>
 
-        <div className="flex flex-col justify-center items-center gap-1 hover:text-[#ec8c2f] transition-colors duration-200 cursor-pointer">
+        <div
+          onClick={handleCartClick}
+          className="flex flex-col justify-center items-center gap-1 hover:text-[#ec8c2f] transition-colors duration-200 cursor-pointer"
+        >
           <IoCartOutline className="w-[30px] h-[30px]" />
           <p className="text-sm">{perCommen.cart}</p>
         </div>
