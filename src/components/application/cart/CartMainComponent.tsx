@@ -7,6 +7,7 @@ import { IoBagCheckOutline } from "react-icons/io5";
 import { getUserDetails } from "@/api/getUserDetails";
 import { useRouter } from "next/navigation";
 import CheckoutModal from "@/components/application/modals/CheckoutModal";
+import { deleteCartItem2 } from "@/api/deleteCartItem2";
 
 interface CartItemType {
   id: string;
@@ -66,9 +67,21 @@ export default function CartMainComponent({ cartData }: Props) {
     );
   };
 
-  const remove = (id: string) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+  const remove = async (id: string) => {
+    try {
+      const result = await deleteCartItem2(id);
+      if (result.success) {
+        console.log("Item deleted successfully:", id); 
+        // اینجا لیست cart رو به‌روزرسانی می‌کنیم
+        setCart((prev) => prev.filter((item) => item.id !== id)); 
+      } else {
+        console.error("Failed to delete item:", result.message); 
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error); 
+    }
   };
+  
 
   const totalPrice = cart.reduce(
     (total, item) => total + item.discountedPrice * item.quantity,
