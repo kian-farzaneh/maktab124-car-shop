@@ -4,6 +4,7 @@ import Button from "@/components/base/Button";
 import { convertToPersianNumbers } from "@/utils/convertToPersianNumbers/convertToPersianNumbers";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { deleteCartItem } from "@/api/deleteCartItem";
 
 interface PaymentProps {
   userData: any;
@@ -26,14 +27,21 @@ export default function PaymentMainComponent({
     totalPrice,
   };
 
-  const handlePayment = () => {
-    setFinalPrice(0);
-    postOrder(paymentData)
-      .then((res) => {
-        console.log(res);
-        router.push("/");
-      })
-      .catch((err) => console.error(err));
+  const handlePayment = async () => {
+    try {
+      const res = await postOrder(paymentData);
+      console.log("سفارش ثبت شد:", res);
+
+      for (const item of cartData) {
+        await deleteCartItem(item.id);
+      }
+      console.log("تمام آیتم‌های سبد خرید حذف شدند");
+
+      setFinalPrice(0);
+      router.push("/");
+    } catch (err) {
+      console.error("خطا در پرداخت:", err);
+    }
   };
 
   return (
