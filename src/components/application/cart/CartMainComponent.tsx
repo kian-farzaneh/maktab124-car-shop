@@ -72,7 +72,7 @@ export default function CartMainComponent({ cartData }: Props) {
       const result = await deleteCartItem2(id);
       if (result.success) {
         console.log("Item deleted successfully:", id); 
-        // اینجا لیست cart رو به‌روزرسانی می‌کنیم
+
         setCart((prev) => prev.filter((item) => item.id !== id)); 
       } else {
         console.error("Failed to delete item:", result.message); 
