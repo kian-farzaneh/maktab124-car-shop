@@ -6,7 +6,10 @@ type Props = {
   };
 };
 
-// ✅ This is a server component now (no "use client")
-export default function BrandPage({ params }: Props) {
+export default function BrandPage({
+  params,
+}: {
+  params: { brand: string };
+}){
   return <BrandClientComponent brand={params.brand} />;
 }
