@@ -1,15 +1,18 @@
 import BrandClientComponent from "@/components/application/brandsPage/BrandClientComponent";
 
-type Props = {
-  params: {
-    brand: string;
-  };
-};
-
 export default function BrandPage({
   params,
 }: {
   params: { brand: string };
-}){
+}) {
   return <BrandClientComponent brand={params.brand} />;
+}
+
+
+export async function generateStaticParams() {
+  const brands = ["Ford", "Benz", "Bentley", "Lamborghini", "Hummer", "Audi"];
+
+  return brands.map((brand) => ({
+    brand,
+  }));
 }
