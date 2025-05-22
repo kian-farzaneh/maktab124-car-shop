@@ -7,10 +7,11 @@ import React, { useEffect, useState } from "react";
 
 export default function CartPage() {
   const router = useRouter();
-
+  const [isClient, setIsClient] = useState(false);
   const [cartData, setCartData] = useState(null);
 
   useEffect(() => {
+    setIsClient(true);
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("userAccessToken");
       if (!token) {
@@ -34,6 +35,8 @@ export default function CartPage() {
       fetchUserAndCart();
     }
   }, []);
+
+  if (!isClient) return null;
 
   return (
     <>
