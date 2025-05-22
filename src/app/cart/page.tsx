@@ -11,25 +11,28 @@ export default function CartPage() {
   const [cartData, setCartData] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("userAccessToken");
-    if (!token) {
-      router.push('/')
-    }
-    const fetchUserAndCart = async () => {
-      try {
-        const email = await getUser();
-
-        if (email) {
-          const cart = await getCartByEmail(email);
-          setCartData(cart);
-          console.log("Cart Data:", cart);
-        }
-      } catch (err) {
-        console.error("Error fetching user/cart:", err);
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("userAccessToken");
+      if (!token) {
+        router.push("/");
+        return;
       }
-    };
+      const fetchUserAndCart = async () => {
+        try {
+          const email = await getUser();
 
-    fetchUserAndCart();
+          if (email) {
+            const cart = await getCartByEmail(email);
+            setCartData(cart);
+            console.log("Cart Data:", cart);
+          }
+        } catch (err) {
+          console.error("Error fetching user/cart:", err);
+        }
+      };
+
+      fetchUserAndCart();
+    }
   }, []);
 
   return (
