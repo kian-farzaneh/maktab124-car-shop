@@ -3,7 +3,7 @@ import BrandClientComponent from "@/components/application/brandsPage/BrandClien
 export default async function BrandPage({
   params,
 }: {
-  params: { brand: string }; 
+  params: { brand: string } & Promise<any>;
 }) {
   return <BrandClientComponent brand={params.brand} />;
 }
