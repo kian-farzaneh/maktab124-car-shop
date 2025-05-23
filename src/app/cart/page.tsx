@@ -1,6 +1,6 @@
-"use client";
+"use client"; 
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 import { getCartByEmail } from "@/api/getCartByEmail";
 import { getUser } from "@/api/getUser";
@@ -10,41 +10,44 @@ import React, { useEffect, useState } from "react";
 
 export default function CartPage() {
   const router = useRouter();
-  const [cartData, setCartData] = useState(null);
-  const [hasMounted, setHasMounted] = useState(false);
+  const [isReady, setIsReady] = useState(false); 
 
   useEffect(() => {
-    setHasMounted(true);
-
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("userAccessToken");
-      if (!token) {
-        router.push("/");
-        return;
-      }
-      const fetchUserAndCart = async () => {
-        try {
-          const email = await getUser();
-
-          if (email) {
-            const cart = await getCartByEmail(email);
-            setCartData(cart);
-            console.log("Cart Data:", cart);
-          }
-        } catch (err) {
-          console.error("Error fetching user/cart:", err);
-        }
-      };
-
-      fetchUserAndCart();
+    setIsReady(true);
+    
+    const token = typeof window !== 'undefined' 
+      ? localStorage.getItem("userAccessToken")
+      : null;
+      
+    if (!token) {
+      router.push("/");
+      return;
     }
   }, [router]);
 
-  if (!hasMounted) return null;
+  if (!isReady) return null;
 
-  return (
-    <>
-      <CartMainComponent cartData={cartData} />
-    </>
-  );
+  return <ClientCartPage />;
+}
+
+function ClientCartPage() {
+  const [cartData, setCartData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const email = await getUser();
+        if (email) {
+          const cart = await getCartByEmail(email);
+          setCartData(cart);
+        }
+      } catch (err) {
+        console.error("Error:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return <CartMainComponent cartData={cartData} />;
 }
