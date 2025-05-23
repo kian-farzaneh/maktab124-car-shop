@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {} from "react";
 import Logo from "@/components/base/Logo";
 import CartItem from "@/components/application/cart/CartItem";
 import { IoBagCheckOutline } from "react-icons/io5";
