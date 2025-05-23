@@ -5,7 +5,6 @@ import Logo from "@/components/base/Logo";
 import CartItem from "@/components/application/cart/CartItem";
 import { IoBagCheckOutline } from "react-icons/io5";
 import { getUserDetails } from "@/api/getUserDetails";
-import { useRouter } from "next/navigation";
 import CheckoutModal from "@/components/application/modals/CheckoutModal";
 import { deleteCartItem2 } from "@/api/deleteCartItem2";
 
@@ -27,11 +26,11 @@ interface Props {
 }
 
 export default function CartMainComponent({ cartData }: Props) {
+  if (typeof window === "undefined") return null;
+
   const [cart, setCart] = useState<CartItemType[]>([]);
   const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
-  const router = useRouter();
 
   useEffect(() => {
     if (cartData) {
@@ -71,17 +70,16 @@ export default function CartMainComponent({ cartData }: Props) {
     try {
       const result = await deleteCartItem2(id);
       if (result.success) {
-        console.log("Item deleted successfully:", id); 
+        console.log("Item deleted successfully:", id);
 
-        setCart((prev) => prev.filter((item) => item.id !== id)); 
+        setCart((prev) => prev.filter((item) => item.id !== id));
       } else {
-        console.error("Failed to delete item:", result.message); 
+        console.error("Failed to delete item:", result.message);
       }
     } catch (error) {
-      console.error("Error deleting item:", error); 
+      console.error("Error deleting item:", error);
     }
   };
-  
 
   const totalPrice = cart.reduce(
     (total, item) => total + item.discountedPrice * item.quantity,
