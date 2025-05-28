@@ -18,11 +18,11 @@ export default async function getProducts(filters: FilterParams = {}) {
       queryParams.append("filterValue", filters.filterValue);
     }
 
-    if (filters.filterMin) {
+    if (filters.filterMin !== undefined) {
       queryParams.append("filterMin", filters.filterMin.toString());
     }
 
-    if (filters.filterMax) {
+    if (filters.filterMax !== undefined) {
       queryParams.append("filterMax", filters.filterMax.toString());
     }
 
@@ -31,15 +31,18 @@ export default async function getProducts(filters: FilterParams = {}) {
       queryParams.append("searchValue", filters.searchValue);
     }
 
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/records/products?${queryParams.toString()}`,
-      {
-        headers: {
-          api_key: `${process.env.NEXT_PUBLIC_API_KEY}`,
-          Authorization: `Bearer ${localStorage.getItem("adminAccessToken")}`,
-        },
-      }
-    );
+    const proxyUrl = `/api/proxy?url=/api/records/products&${queryParams.toString()}`;
+
+    let token = "";
+    if (typeof window !== "undefined") {
+      token = localStorage.getItem("adminAccessToken") || "";
+    }
+
+    const response = await axios.get(proxyUrl, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
 
     return response.data.records;
   } catch (err) {

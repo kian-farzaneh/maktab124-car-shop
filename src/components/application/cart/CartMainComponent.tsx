@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Logo from "@/components/base/Logo";
 import CartItem from "@/components/application/cart/CartItem";
 import { IoBagCheckOutline } from "react-icons/io5";
-import { getUserDetails} from "@/api/getUserDetails";
+import { getUserDetails } from "@/api/getUserDetails";
 import { getCartByEmail } from "@/api/getCartByEmail";
 import { deleteCartItem2 } from "@/api/deleteCartItem2";
 import CheckoutModal from "@/components/application/modals/CheckoutModal";
@@ -32,7 +32,7 @@ export default function CartMainComponent() {
     const fetchAllData = async () => {
       try {
         setIsLoading(true);
-        
+
         // Fetch user email first
         const email = await getUser();
         if (!email) {
@@ -42,7 +42,7 @@ export default function CartMainComponent() {
         // Fetch user details and cart in parallel
         const [userData, cartData] = await Promise.all([
           getUserDetails(),
-          getCartByEmail(email)
+          getCartByEmail(email),
         ]);
 
         setUser(userData);
@@ -58,16 +58,16 @@ export default function CartMainComponent() {
   }, []);
 
   const handleIncrease = (id: string) => {
-    setCart(prev =>
-      prev.map(item =>
+    setCart((prev) =>
+      prev.map((item) =>
         item.id === id ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
 
   const handleDecrease = (id: string) => {
-    setCart(prev =>
-      prev.map(item =>
+    setCart((prev) =>
+      prev.map((item) =>
         item.id === id && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item
@@ -79,7 +79,7 @@ export default function CartMainComponent() {
     try {
       const result = await deleteCartItem2(id);
       if (result.success) {
-        setCart(prev => prev.filter(item => item.id !== id));
+        setCart((prev) => prev.filter((item) => item.id !== id));
       }
     } catch (error) {
       console.error("Error removing item:", error);
@@ -136,7 +136,7 @@ export default function CartMainComponent() {
           </div>
         ) : (
           <div className="grid gap-4 max-w-4xl mx-auto">
-            {cart.map(item => (
+            {cart.map((item) => (
               <CartItem
                 key={item.id}
                 item={item}
