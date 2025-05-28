@@ -12,7 +12,7 @@ export async function addProductToCart(
 ) {
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/records/carts`,
+      `/api/proxy?url=/api/records/carts`,
       {
         user,
         selectedColor,
@@ -21,12 +21,7 @@ export async function addProductToCart(
         name,
         isAvailable,
         image,
-        discountedPrice
-      },
-      {
-        headers: {
-          api_key: process.env.NEXT_PUBLIC_API_KEY,
-        },
+        discountedPrice,
       }
     );
     return response.data;

@@ -24,14 +24,9 @@ export const signUpUser = async ({
     address,
   };
 
-  const header = {
-    api_key: process.env.NEXT_PUBLIC_API_KEY,
-  };
-
   const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/register`,
-    body,
-    { headers: header }
+    `/api/proxy?url=/api/users/register`,
+    body
   );
 
   return response.data.accessToken;

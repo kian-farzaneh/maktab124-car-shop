@@ -1,13 +1,12 @@
 import axios from "axios";
 
-const addProduct = async (productData: any) => {
+const postProduct = async (productData: any) => {
   const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/records/products`,
+    `/api/proxy?url=/api/records/products`,
     productData,
     {
       headers: {
         "Content-Type": "application/json",
-        api_key: process.env.NEXT_PUBLIC_API_KEY,
         Authorization: `Bearer ${localStorage.getItem("adminAccessToken")}`,
       },
     }
@@ -16,4 +15,4 @@ const addProduct = async (productData: any) => {
   return response.data;
 };
 
-export default addProduct;
+export default postProduct;
