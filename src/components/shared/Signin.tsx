@@ -46,18 +46,10 @@ export default function Signin({ validationType }: SigninProps) {
     if (usernameError || passwordError || !username || !password) return;
 
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`,
-        {
-          email: username,
-          password,
-        },
-        {
-          headers: {
-            api_key: `${process.env.NEXT_PUBLIC_API_KEY}`,
-          },
-        }
-      );
+      const response = await axios.post(`/api/proxy?url=/api/users/login`, {
+        email: username,
+        password,
+      });
 
       const accessToken = response.data.accessToken;
 
